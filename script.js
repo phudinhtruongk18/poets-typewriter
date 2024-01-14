@@ -1,38 +1,3 @@
-var url = "https://ats2cr.deta.dev";
-const urlParams = new URLSearchParams(window.location.search);
-const key = urlParams.get('key');
-
-if (key) {
-    url += "/poems/" + key;
-}
-
-const addBreaks = (lines) => {
-    let poem = "";
-    for (let i = 0; i < lines.length; i++) {
-        poem += lines[i] + "<br>"
-    }
-    return poem;
-}
-
-let index = 0;
-const typing = (poem, verses) => {    
-    setTimeout(() => {
-        if (index === poem.length) return;
-        if (poem[index] === '<') index += 2;
-        verses.innerHTML = poem.slice(0, index);
-        index++;
-        typing(poem, verses);
-    }, 50);     
-}
-
-const getPoem = async () => {
-    const response = await fetch(url);
-    if (response.status !== 200) {
-        throw new Error('Oops... Something went wrong :(');
-    }
-    const poem = await response.json();
-    return poem;
-}
 
 const author = document.getElementsByClassName("author")[0];
 const title = document.getElementsByClassName("title")[0];
